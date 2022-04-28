@@ -2165,7 +2165,7 @@ function payloadFileSync(pointer) {
       // Node addon files and .so cannot be read with fs directly, they are loaded with process.dlopen which needs a filesystem path
       // we need to write the file somewhere on disk first and then load it
       // the hash is needed to be sure we reload the module in case it changes
-      const hash = createHash('sha256').update(moduleContent).digest('hex');
+      const hash = createHash('sha256').update(moduleContent).update(`${process.pid}`).digest('hex');
 
       // Example: /tmp/pkg/<hash>
       const tmpFolder = path.join(tmpdir(), 'pkg', hash);
